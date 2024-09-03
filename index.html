@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <style>
+        /* Styles pour la mise en page */
+        body {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f0f0f0;
+            margin: 0; /* Supprime les marges par défaut du body */
+            height: 120vh;
+        }
+        .position {
+            margin-top: 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centre tous les éléments horizontalement */
+        }
+        .left-section {
+            background-color: #f0f0f0;
+            padding: 20px;
+            flex: 1; /* Prendra 50% de l'espace disponible */
+        }
+        .right-section {
+            background-color: #3055c3;
+            padding: 20px;
+            flex: 1; /* Prendra 50% de l'espace disponible */
+            display: flex;
+            justify-content: center; /* Centre horizontalement le contenu */
+            align-items: center; /* Centre verticalement le contenu */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex-direction: column; /* Organiser les éléments en colonne */
+        }
+        .form-container {
+            background-color: rgba(240, 240, 240, 0.8); /* Couleur de fond avec transparence */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        #submit-btn {
+            padding: 15px 5%;
+            border-radius: 15px;
+            background-color: #77aaff;
+            color: white;
+            transition: 0.3s ease-out;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+        }
+        #submit-btn:hover {
+             background-color: #3055c3;
+        }
+        #create-account-btn {
+            padding: 15px 5%;
+            border-radius: 15px;
+            background-color: #77aaff;
+            color: white;
+            transition: 0.3s ease-out;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        #create-account-btn:hover{
+            background-color: #3055c3;
+
+        }
+
+        #create-account-form {
+            display: none; /* Masquer le formulaire de création de compte par défaut */
+            margin-top: 20px;
+            background: none; /* Supprimer le fond */
+            box-shadow: none; /* Supprimer l'ombre portée */
+        }
+        #video {
+            max-width: 100%; /* La vidéo ne dépassera pas 100% de la largeur du conteneur parent */
+            max-height: 300px; /* Limite la hauteur maximale de la vidéo */
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center; /* Centre le titre sous la vidéo */
+        }
+        p {
+            text-align: center; /* Centre le texte sous la vidéo */
+            margin-top: 10px; /* Espacement supplémentaire pour le texte */
+        }
+        #register-btn{
+            width: 100%;
+            height: 50px;
+            border-radius: 15px;
+            text-align: center;
+            background-color: #77aaff;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s ease-out;
+            border: none;
+        }
+        #register-btn:hover{
+            background-color: #3055c3;
+            color: white;
+        }
+        @media screen and (min-width: 640px) {
+            .left-section,
+            .right-section {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="border"></div>
+    <div class="left-section">
+        <div class="position">
+            <video id="video" src="clipchamp.mp4" autoplay loop muted></video>
+            <h1>LittleBoys</h1>
+            <p>La collection LittleBoys représente des personnages souriants et amusants dans le but de vous divertir. Cependant, vous avez la possibilité de visiter la collection ci-dessous et d'acheter l'œuvre qui vous plaît. Si vous avez le moindre problème, n'hésitez pas à me contacter sur Instagram.<br>Bonne chance et salutations.</p>
+        </div>
+    </div>
+    <div class="right-section">
+        <div class="form-container">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Adresse e-mail :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" id="submit-btn">Connexion</button>
+            </form>
+            <div id="create-account-btn">Créer un compte</div>
+            <div id="create-account-form">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="new-email">Nouvelle adresse e-mail :</label>
+                        <input type="email" id="new-email" name="new-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">Nouveau mot de passe :</label>
+                        <input type="password" id="new-password" name="new-password" required>
+                    </div>
+                    <button type="submit" id="register-btn">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour charger les comptes existants
+        function loadAccounts() {
+            return JSON.parse(localStorage.getItem('userAccounts')) || {};
+        }
+
+        // Fonction pour sauvegarder les comptes
+        function saveAccounts(accounts) {
+            localStorage.setItem('userAccounts', JSON.stringify(accounts));
+        }
+
+        // Fonction pour charger les informations de connexion (e-mail et mot de passe)
+        function loadLoginInfo() {
+            const email = localStorage.getItem('savedEmail');
+            const password = localStorage.getItem('savedPassword');
+            if (email) {
+                document.getElementById('email').value = email;
+                document.getElementById('password').value = password;
+            }
+        }
+
+        // Fonction pour enregistrer les informations de connexion
+        function saveLoginInfo(email, password) {
+            localStorage.setItem('savedEmail', email);
+            localStorage.setItem('savedPassword', password);
+        }
+
+        // Charger les informations de connexion sauvegardées au chargement de la page
+        window.onload = loadLoginInfo;
+
+        // Gestionnaire d'événements pour le formulaire de connexion
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const accounts = loadAccounts();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (accounts[email] === password) {
+                // Enregistrer les informations de connexion
+                saveLoginInfo(email, password);
+                window.location.href = "vissiter5.html"; // Rediriger vers la page de collection
+            } else if (accounts[email] === undefined) {
+                alert("Adresse e-mail incorrecte.");
+            } else {
+                alert("Mot de passe incorrect.");
+            }
+        });
+
+        // Remplissage automatique du mot de passe lorsqu'une adresse e-mail connue est saisie
+        document.getElementById('email').addEventListener('input', function() {
+            const accounts = loadAccounts();
+            const email = document.getElementById('email').value;
+
+            if (accounts[email]) {
+                document.getElementById('password').value = accounts[email];
+            }
+        });
+
+        // Gestionnaire d'événements pour le bouton "Créer un compte"
+        document.getElementById('create-account-btn').addEventListener('click', function() {
+            const createAccountForm = document.getElementById('create-account-form');
+            if (createAccountForm.style.display === "none" || createAccountForm.style.display === "") {
+                createAccountForm.style.display = "block";
+            } else {
+                createAccountForm.style.display = "none";
+            }
+        });
+
+        // Gestionnaire d'événements pour le formulaire de création de compte
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const newEmail = document.getElementById('new-email').value;
+            const newPassword = document.getElementById('new-password').value;
+            const accounts = loadAccounts();
+
+            if (accounts[newEmail]) {
+                alert("Un compte avec cette adresse e-mail existe déjà.");
+            } else {
+                accounts[newEmail] = newPassword;
+                saveAccounts(accounts);
+                alert("Compte créé avec succès !");
+                document.getElementById('create-account-form').style.display = "none"; // Masquer le formulaire de création de compte
+                // Enregistrer les nouvelles informations de connexion
+                saveLoginInfo(newEmail, newPassword);
+                document.getElementById('email').value = newEmail;
+                document.getElementById('password').value = newPassword;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
